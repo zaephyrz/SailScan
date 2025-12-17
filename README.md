@@ -152,7 +152,7 @@ This project is licensed under the AGPLv3 License - see the [LICENSE](LICENSE) f
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3.8%2B-blue" alt="Python">
   <img src="https://img.shields.io/badge/FastAPI-0.104-green" alt="FastAPI">
-  <img src="https://img.shields.io/badge/license-AGPLv3-blue" alt="License">" alt="License">
+  <img src="https://img.shields.io/badge/license-AGPLv3-blue" alt="License">
 </p>
 
 ## Quick Commands Cheatsheet
