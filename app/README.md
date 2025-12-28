@@ -1,4 +1,4 @@
-# 🔒 SailScan - Security Analysis Platform (Flask Edition)
+# 🔒 SailScan - Security Analysis Platform
 
 A multi-engine security scanner built with Flask for analyzing files, detecting threats, and reverse engineering.
 
@@ -24,7 +24,7 @@ A multi-engine security scanner built with Flask for analyzing files, detecting 
 
 ```bash
 # 1. Clone repository
-git clone https://github.com/yourusername/sailscan.git
+git clone https://github.com/zaephyrz/SailScan-.git
 cd sailscan
 
 # 2. Run setup script
