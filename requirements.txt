@@ -1,0 +1,15 @@
+# Core Flask
+flask==3.0.0
+flask-sqlalchemy==3.0.5
+flask-migrate==4.0.5
+flask-cors==4.0.0
+python-dotenv==1.0.0
+
+# Security & Analysis
+requests==2.31.0
+# python-magic==0.4.27  # Optional - comment out if causing issues
+# frida-tools==12.4.1   # Optional - for dynamic analysis
+
+# Utilities
+werkzeug==3.0.1
+jinja2==3.1.2
