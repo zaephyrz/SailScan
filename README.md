@@ -1,4 +1,4 @@
-# 🔒 SailScan - Security Analysis Platform
+# SailScan 🏴‍☠️
 
 A multi-engine security scanner built with Flask for analyzing files, detecting threats, and reverse engineering.
 
