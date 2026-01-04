@@ -3,6 +3,9 @@ import subprocess
 import json
 import tempfile
 import os
+import threading
+import time
+from typing import Dict, Any, List, Optional
 
 # Try to import frida, but handle if it's not available
 try:
@@ -17,70 +20,36 @@ class FridaService:
     
     def __init__(self):
         self.enabled = FRIDA_AVAILABLE
-    
+        self.device = None
+        self.sessions = {}
+        
     def is_available(self) -> bool:
-        """Check if Frida is available"""
-        return self.enabled and FRIDA_AVAILABLE
-    
-    def analyze_process(self, process_name: str):
-        """Analyze running process with Frida"""
-        if not self.is_available():
-            return {
-                'error': 'Frida not available',
-                'message': 'Install frida-tools: pip install frida-tools',
-                'note': 'Frida requires additional system setup'
-            }
+        """Check if Frida is properly installed"""
+        if not FRIDA_AVAILABLE:
+            return False
         
         try:
-            # This is a simplified example
-            # In a real implementation, you would connect to device and attach
-            return {
-                'success': True,
-                'process': process_name,
-                'message': 'Frida analysis would run here',
-                'note': 'Full Frida integration requires USB debugging (Android) or process injection'
-            }
-            
-        except Exception as e:
-            return {'error': str(e)}
-    
-    def trace_executable(self, executable_path: str):
-        """Trace executable with Frida"""
-        if not self.is_available():
-            return {
-                'error': 'Frida not available',
-                'message': 'Install frida-tools to enable dynamic analysis'
-            }
-        
-        try:
-            # Create a simple analysis script
-            script_content = f"""
-            console.log('Frida would trace: {executable_path}');
-            // In real implementation, this would load and instrument the executable
-            """
-            
-            with tempfile.NamedTemporaryFile(mode='w', suffix='.js', delete=False) as f:
-                f.write(script_content)
-                script_path = f.name
-            
-            os.unlink(script_path)
-            
-            return {
-                'success': True,
-                'message': 'Frida tracing ready (simulated)',
-                'note': 'For production use, implement actual process spawning and instrumentation'
-            }
-            
-        except Exception as e:
-            return {'error': str(e)}
+            # Test Frida installation
+            frida.get_local_device()
+            return True
+        except:
+            return False
     
     def get_device_info(self):
         """Get Frida device information"""
         if not self.is_available():
-            return {'available': False}
+            return {
+                'available': False,
+                'error': 'Frida not properly installed',
+                'instructions': [
+                    'Install: pip install frida frida-tools',
+                    'For Android: Download frida-server from GitHub',
+                    'Push to device: adb push frida-server /data/local/tmp/',
+                    'Run: adb shell /data/local/tmp/frida-server &'
+                ]
+            }
         
         try:
-            # Try to get USB device
             devices = frida.enumerate_devices()
             device_info = []
             
@@ -102,3 +71,47 @@ class FridaService:
                 'available': False,
                 'error': str(e)
             }
+    
+    def analyze_process(self, process_name: str):
+        """Analyze running process with Frida"""
+        if not self.is_available():
+            return {
+                'error': 'Frida not available',
+                'message': 'Install frida-tools: pip install frida-tools',
+                'note': 'Frida requires additional system setup'
+            }
+        
+        try:
+            # This is a simplified example
+            return {
+                'success': True,
+                'process': process_name,
+                'message': 'Frida analysis would run here',
+                'note': 'Full Frida integration requires USB debugging (Android) or process injection'
+            }
+            
+        except Exception as e:
+            return {'error': str(e)}
+    
+    def get_scripts_library(self) -> List[Dict[str, str]]:
+        """Get available Frida scripts for common tasks"""
+        return [
+            {
+                'name': 'Root Detection Bypass',
+                'description': 'Bypass common root detection methods',
+                'category': 'Android',
+                'complexity': 'Beginner'
+            },
+            {
+                'name': 'SSL Pinning Bypass',
+                'description': 'Bypass SSL certificate pinning',
+                'category': 'Android/iOS',
+                'complexity': 'Intermediate'
+            },
+            {
+                'name': 'Method Tracing',
+                'description': 'Trace method calls in real-time',
+                'category': 'Universal',
+                'complexity': 'Beginner'
+            }
+        ]

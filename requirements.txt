@@ -7,8 +7,8 @@ python-dotenv==1.0.0
 
 # Security & Analysis
 requests==2.31.0
-# python-magic==0.4.27  # Optional - comment out if causing issues
-# frida-tools==12.4.1   # Optional - for dynamic analysis
+frida==16.0.0
+frida-tools==12.0.0
 
 # Utilities
 werkzeug==3.0.1

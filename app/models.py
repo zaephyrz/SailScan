@@ -38,11 +38,35 @@ class Scan(db.Model):
         return {
             'id': self.id,
             'filename': self.filename,
+            'original_filename': self.original_filename,
+            'hash_md5': self.file_hash_md5,
             'hash_sha256': self.file_hash_sha256,
             'file_size': self.file_size,
             'status': self.status,
             'is_malicious': self.is_malicious,
-            'threat_score': self.threat_score,
+            'threat_score': self.threat_score or 0,  # Ensure default value
             'created_at': self.created_at.isoformat() if self.created_at else None,
+            'started_at': self.started_at.isoformat() if self.started_at else None,
             'completed_at': self.completed_at.isoformat() if self.completed_at else None
         }
+    
+    def get_status_icon(self):
+        """Get status icon for display"""
+        icons = {
+            'pending': '⏳',
+            'scanning': '🔍',
+            'completed': '✅',
+            'failed': '❌'
+        }
+        return icons.get(self.status, '❓')
+    
+    def get_threat_level(self):
+        """Get threat level classification"""
+        if not self.threat_score:
+            return 'unknown'
+        if self.threat_score >= 70:
+            return 'high'
+        elif self.threat_score >= 30:
+            return 'medium'
+        else:
+            return 'low'
