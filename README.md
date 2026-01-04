@@ -24,11 +24,11 @@ A multi-engine security scanner built with Flask for analyzing files, detecting 
 
 ```bash
 # 1. Clone repository
-git clone https://github.com/zaephyrz/SailScan-.git
+git clone https://github.com/zaephyrz/SailScan.git
 cd SailScan
 
-# 2. Run setup script
-chmod +x setup.sh
+# 2. Run install dependencies script
+chmod +x install_dependencies.sh
 ./install_dependencies.sh
 
 # 3. Edit .env file (add your VirusTotal API key)
