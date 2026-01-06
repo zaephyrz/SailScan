@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=SailScan
+Comment=Multi-Engine Security Scanner
+Exec=python3 /path/to/SailScan-GTK.py
+Icon=security-high
+Terminal=false
+Categories=Utility;Security;
