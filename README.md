@@ -36,3 +36,24 @@ nano .env
 
 # 4. Start the application
 python sailscan.py
+```
+
+## 🖥️ GTK Desktop Application
+
+For users who prefer a native desktop experience, SailScan includes a GTK desktop application built for Linux systems.
+
+![SailScan GTK](screenshot-2.png)
+
+### Installation & Launch
+
+```bash
+# Install GTK dependencies
+rpm-ostree install python3-gobject gtk4-devel libadwaita-devel
+
+# Run the GTK app directly
+python SailScan-GTK.py
+
+# Or install desktop entry
+cp sailscan.desktop ~/.local/share/applications/
+# Then launch from your application menu
+```
