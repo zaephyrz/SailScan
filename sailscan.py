@@ -1,71 +1,48 @@
 #!/usr/bin/env python3
 """
-SailScan - Multi-engine Security Scanner
-Entry point for Flask application
+SailScan - Main application entry point for Render.com
 """
 import os
 import sys
+from app import create_app, db
 
-# Add current directory to Python path
+# Add current directory to path
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from app import create_app, db
-from flask_migrate import Migrate
-
-# Create application instance
 app = create_app()
-migrate = Migrate(app, db)
 
-@app.cli.command("init-db")
-def init_db_command():
-    """Initialize the database"""
+@app.cli.command("create-db")
+def create_db():
+    """Create database tables"""
+    print("🔧 Creating database tables...")
     with app.app_context():
-        db.create_all()
-    print("✅ Database initialized!")
-
-@app.cli.command("seed")
-def seed_command():
-    """Add sample data to database"""
-    from app.models import Scan
-    from datetime import datetime, timedelta
-    
-    with app.app_context():
-        # Add a sample scan for testing
-        sample_scan = Scan(
-            filename="sample.exe",
-            original_filename="sample.exe",
-            file_hash_sha256="a" * 64,
-            file_hash_md5="b" * 32,
-            file_size=1024,
-            status="completed",
-            is_malicious=False,
-            threat_score=10,
-            created_at=datetime.utcnow() - timedelta(hours=1)
-        )
-        db.session.add(sample_scan)
-        db.session.commit()
-    
-    print("✅ Database seeded with sample data!")
+        try:
+            db.create_all()
+            print("✅ Database tables created successfully!")
+            
+            # Create uploads directory
+            uploads_dir = app.config.get('UPLOAD_FOLDER', 'uploads')
+            if not os.path.exists(uploads_dir):
+                os.makedirs(uploads_dir, exist_ok=True)
+                print(f"✅ Created uploads directory: {uploads_dir}")
+                
+        except Exception as e:
+            print(f"❌ Error creating database: {e}")
+            import traceback
+            traceback.print_exc()
 
 if __name__ == '__main__':
-    # Run the application
-    host = os.getenv('FLASK_HOST', '0.0.0.0')
-    port = int(os.getenv('FLASK_PORT', 5000))
-    debug = os.getenv('FLASK_DEBUG', 'True').lower() == 'true'
+    # Get port from environment variable (Render sets this)
+    port = int(os.environ.get('PORT', 5000))
     
     print(f"""
-    ⚓ SailScan Security Scanner
+    🚀 SailScan Security Scanner
     ================================
-    🚀 Starting server...
-    📍 Host: {host}
+    📍 Host: 0.0.0.0
     🚪 Port: {port}
-    🔧 Debug: {debug}
+    🔧 Debug: False
     
-    🌐 Access: http://localhost:{port}
-    📊 Dashboard: http://localhost:{port}/
-    🔌 API Status: http://localhost:{port}/api/virustotal/status
-    
-    Press Ctrl+C to stop
+    🌐 Starting server...
     """)
     
-    app.run(host=host, port=port, debug=debug)
+    app.run(host='0.0.0.0', port=port, debug=False)
