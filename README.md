@@ -57,3 +57,13 @@ python SailScan-GTK.py
 cp sailscan.desktop ~/.local/share/applications/
 # Then launch from your application menu
 ```
+
+## 📄 License
+
+SailScan is licensed under the **GNU Affero General Public License v3.0 (AGPLv3)**.
+
+This means:
+- You can use, modify, and distribute SailScan for any purpose
+- You must distribute source code when you distribute the software
+- Modifications must be released under the same license
+- Network services using SailScan must provide source code to users
