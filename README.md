@@ -1,6 +1,6 @@
 # SailScan 🏴‍☠️
 
-A multi-engine security scanner built with Flask for analyzing files, detecting threats, and reverse engineering.
+A security scanner built with Flask and powered by VirusTotal for analyzing files for threats and vulnerabilities.
 
 ![SailScan Dashboard](screenshot.png)
 
@@ -9,7 +9,6 @@ A multi-engine security scanner built with Flask for analyzing files, detecting 
 - **🛡️ VirusTotal Integration**: 60+ antivirus engines
 - **🔧 Static Analysis**: File structure, hashes, signatures
 - **📱 Mobile Analysis**: APK/IPA support, Flutter detection
-- **⚡ Frida Integration**: Dynamic instrumentation (optional)
 - **🌐 Web Dashboard**: Clean, modern interface
 - **📊 REST API**: Full API for automation
 - **💾 Database**: Scan history and results storage
